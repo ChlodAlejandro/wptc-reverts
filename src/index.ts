@@ -94,7 +94,7 @@ class WPTCReverts {
                 );
 
             // Strip talk links
-            strippedSummary = summary.replace(/ ?\(talk\)/g, "");
+            strippedSummary = strippedSummary.replace(/ ?\(talk\)/g, "");
 
             this.log.info(`Found new edit by ${change.user} (${
                 change.revision.new
