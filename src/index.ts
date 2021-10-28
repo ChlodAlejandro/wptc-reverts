@@ -86,7 +86,9 @@ class WPTCReverts {
                 // RedWarn
                 /^Reverting edit\(s\) by .+ to rev. .+ \d+ by .+?(: ?)?/g,
                 // Twinkle
-                /^Reverted \d+ edits? by .+ (talk)(: ?|$)/g
+                /^Reverted \d+ edits? by .+ (talk)(: ?|$)/g,
+                // Generic
+                /^Revert(ing|ed) ?/g
             ];
 
             if (!signatures.some(v => v.test(summary)))
