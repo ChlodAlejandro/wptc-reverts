@@ -70,6 +70,11 @@ class WPTCReverts {
             if (!this.pages.includes(change.title))
                 return;
 
+            if (change.comment.includes("([[WP:HG|HG]])") || change.user === "ClueBot NG")
+                return;
+            if (/rv[vd]|vand(alism)?/gi.test(change.comment))
+                return;
+
             const $ = cheerio.load(change.parsedcomment);
             const summary = $.root().text();
 
