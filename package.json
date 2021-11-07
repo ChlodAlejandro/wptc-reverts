@@ -4,7 +4,9 @@
     "description": "Bot that posts reverts to WPTC pages.",
     "main": "src/index.ts",
     "scripts": {
-        "dev": "node -r ts-node/register src/index.ts"
+        "build": "tsc",
+        "dev": "node -r ts-node/register src/index.ts",
+        "start": "node src/index.ts"
     },
     "repository": {
         "type": "git",
