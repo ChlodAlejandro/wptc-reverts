@@ -41,6 +41,6 @@
         "mwn": "^1.11.4",
         "prompts": "^2.4.2",
         "twitter-api-v2": "^1.6.4",
-        "wikimedia-streams": "^0.1.1"
+        "wikimedia-streams": "^0.1.2"
     }
 }
