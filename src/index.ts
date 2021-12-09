@@ -88,7 +88,7 @@ class WPTCReverts {
                 // Undo
                 /^Undid revision .+? by .+? \(talk\) ?/g,
                 // RedWarn
-                /^Reverting edit\(s\) by .+ to rev. .+ \d+ by .+?(: ?)?/g,
+                /^Revert(?:ing|ed) edit\(s\) by .+ to rev\. .+ by .+?: ?/g,
                 // Twinkle
                 /^Reverted \d+ edits? by .+ (talk)(: ?|$)/g,
                 // Generic
