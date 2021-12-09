@@ -55,7 +55,6 @@ class WPTCReverts {
             silent: true
         });
         await this.getPages();
-        setInterval(() => { this.getPages(); }, 600000);
 
         this.stream = new WikimediaStream("mediawiki.recentchange");
         this.stream.on("open", () => {
@@ -64,12 +63,17 @@ class WPTCReverts {
         this.stream.on("error", () => {
             this.log.info("An error occurred with the stream!");
         });
-        this.stream.on("mediawiki.recentchange", (change) => {
+        this.stream.on("mediawiki.recentchange", async (change) => {
             if (change.wiki !== "enwiki" || change.type !== "edit")
                 return;
+            if (change.title.startsWith("User:Zoomiebot/WPTC Indexer")) {
+                await this.getPages();
+                return;
+            }
             if (!this.pages.includes(change.title))
                 return;
 
+            // Avoid vandalism reverts
             if (change.comment.includes("([[WP:HG|HG]])") || change.user === "ClueBot NG")
                 return;
             if (/rv[vd]|vand(alism)?/gi.test(change.comment))
@@ -114,7 +118,7 @@ class WPTCReverts {
                     .replace(/{{{summary}}}/g, "")
                     .replace(/https:.+$/g, "-".repeat(24)).length;
 
-                this.twitter.v1.tweet(
+                await this.twitter.v1.tweet(
                     WPTCReverts.TWEET_TEXT
                         .replace(/{{{user}}}/g, change.user)
                         .replace(/{{{title}}}/g, change.title)
@@ -122,7 +126,7 @@ class WPTCReverts {
                         .replace(/{{{diff}}}/g, `${change.revision.new}`)
                 );
             } else {
-                this.twitter.v1.tweet(
+                await this.twitter.v1.tweet(
                     WPTCReverts.TWEET_TEXT_EMPTY
                         .replace(/{{{user}}}/g, change.user)
                         .replace(/{{{title}}}/g, change.title)
